@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Brillant — Graphiste Designer. Identité visuelle, print, réseaux sociaux et UI design." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+    <title>Brillant — Graphiste Designer</title>
+    <!-- Aperçus de partage (Facebook, LinkedIn, WhatsApp, X…). %OG_ORIGIN% = adresse du site, remplie au build sur Vercel
+         (lignes retirées si l'adresse est inconnue). Les pages /projets/… reçoivent leurs propres balises (api/page.js). -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Brisign — Brillant, graphiste designer" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content="Brillant — Graphiste Designer" />
+    <meta property="og:description" content="Identité visuelle, print, réseaux sociaux et UI design : des visuels qui donnent du caractère aux marques." />
+    <meta property="og:url" content="%OG_ORIGIN%/" />
+    <meta property="og:image" content="%OG_ORIGIN%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Brisign — Brillant, graphiste designer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="%OG_ORIGIN%/og-image.png" />
+    <!-- Applique le thème clair/sombre avant le premier rendu (évite un flash). Ignoré dans l'admin. -->
+    <script>
+      ;(function () {
+        if (location.pathname.indexOf('/admin-bri') === 0) return
+        var t = null
+        try { t = localStorage.getItem('theme') } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = 'dark' // sombre par défaut
+        document.documentElement.dataset.theme = t
+        document.documentElement.style.background = t === 'dark' ? '#111111' : '#f7f7f7'
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

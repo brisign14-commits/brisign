@@ -1,0 +1,222 @@
+@import 'tailwindcss';
+
+/* =====================================================================
+   Direction artistique — « Éditorial »
+   Papier chaud + encre + un seul signal (vermillon), utilisé avec parcimonie.
+   Syne        → titres (personnalité, compositions XXL)
+   Space Grotesk → lecture (paragraphes, interface)
+   JetBrains Mono → métadonnées (index, dates, catégories)
+   ===================================================================== */
+@theme {
+  --color-paper: #f1efe9;
+  --color-paper-2: #e6e3db;
+  --color-card: #fbfaf7;
+  --color-ink: #141414;
+  --color-ink-2: #2b2b2b;
+  --color-mute: #6d6a63;
+  --color-line: rgb(20 20 20 / 0.12);
+  --color-line-strong: rgb(20 20 20 / 0.28);
+  --color-signal: #ff4f1f;
+  --color-success: #1f8a4c;
+  --color-danger: #c4361b;
+
+  /* Site public — jetons thémables (clair par défaut, sombre via [data-theme='dark']) */
+  --color-bg: #ffffff;
+  --color-fg: #141414;
+  --color-night: #0b0b0b;
+  --color-surface: #f5f4f1;
+  --color-surface-2: #ecebe6;
+  --color-edge: rgb(20 20 20 / 0.09);
+  --color-edge-strong: rgb(20 20 20 / 0.2);
+  --color-fog: #67645e;
+  --color-cream: #f4f1ec;
+
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-brand: 'Poppins', system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =====================================================================
+   Charte Brisign — site public uniquement (data-theme n'est posé que là,
+   l'admin garde ses couleurs). Trois couleurs, aucun dégradé :
+   #111111 noir · #F4B000 jaune · #F7F7F7 blanc cassé.
+   Les nuances (surfaces, filets, texte secondaire) sont ces mêmes couleurs
+   mélangées entre elles, jamais une nouvelle teinte.
+   ===================================================================== */
+:root[data-theme] {
+  --color-signal: #f4b000;
+  --color-ink: #111111;
+  --color-night: #111111;
+  --color-black: #111111;
+  --color-white: #f7f7f7;
+}
+
+/* Mode clair */
+:root[data-theme='light'] {
+  --color-bg: #f7f7f7;
+  --color-fg: #111111;
+  --color-surface: color-mix(in srgb, #111111 4%, #f7f7f7);
+  --color-surface-2: color-mix(in srgb, #111111 8%, #f7f7f7);
+  --color-edge: rgb(17 17 17 / 0.1);
+  --color-edge-strong: rgb(17 17 17 / 0.22);
+  --color-fog: color-mix(in srgb, #111111 64%, #f7f7f7);
+  --color-cream: color-mix(in srgb, #111111 4%, #f7f7f7);
+  color-scheme: light;
+}
+
+/* Mode sombre */
+:root[data-theme='dark'] {
+  --color-bg: #111111;
+  --color-fg: #f7f7f7;
+  --color-surface: color-mix(in srgb, #f7f7f7 5%, #111111);
+  --color-surface-2: color-mix(in srgb, #f7f7f7 9%, #111111);
+  --color-edge: rgb(247 247 247 / 0.1);
+  --color-edge-strong: rgb(247 247 247 / 0.22);
+  --color-fog: color-mix(in srgb, #f7f7f7 62%, #111111);
+  --color-cream: color-mix(in srgb, #f7f7f7 4%, #111111);
+  color-scheme: dark;
+}
+
+/* En clair, le jaune sur fond clair se lit mal : les petits libellés passent en noir, la pastille reste jaune */
+:root[data-theme='light'] .eyebrow {
+  color: var(--color-fg);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Gouttière horizontale commune à toutes les sections publiques */
+  .gutter {
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  }
+  /* Métadonnées : index, dates, catégories */
+  .meta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* Lien texte avec soulignement animé */
+  .link-u {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-out-expo);
+  }
+  .link-u:hover,
+  .link-u:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* ---- Site public ---- */
+  .container-x {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  }
+  /* Petit libellé orange au-dessus des titres */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-signal);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--color-signal);
+  }
+  .h-section {
+    font-size: clamp(2rem, 4.2vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 9999px;
+    padding: 0.8rem 1.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+  .btn-primary:hover {
+    background: var(--color-fg);
+    color: var(--color-bg);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-edge-strong);
+    color: var(--color-fg);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--color-fg) 5%, transparent);
+    border-color: color-mix(in oklab, var(--color-fg) 40%, transparent);
+  }
+  .btn-dark {
+    background: var(--color-night);
+    color: var(--color-white);
+  }
+  .btn-dark:hover {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+  .card {
+    border-radius: 1.75rem;
+    border: 1px solid var(--color-edge);
+    background: var(--color-surface);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
