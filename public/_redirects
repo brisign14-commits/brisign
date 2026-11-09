@@ -1,1 +1,10 @@
-/*  /index.html  200
+# Netlify — règles lues dans l'ordre (la première qui correspond s'applique).
+# Fonctions serveur (dossier netlify/functions, même logique que api/ sur Vercel)
+/api/chat           /.netlify/functions/chat            200
+/api/contact        /.netlify/functions/contact         200
+/api/reply          /.netlify/functions/reply           200
+/api/brand-extract  /.netlify/functions/brand-extract   200
+# Pages projet : aperçu de partage (image, titre) pour Facebook, LinkedIn, WhatsApp…
+/projets/:slug      /.netlify/functions/page?slug=:slug 200
+# Application React (toutes les autres adresses)
+/*                  /index.html                         200

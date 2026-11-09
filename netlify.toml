@@ -1,0 +1,13 @@
+# Configuration Netlify (sur Vercel, c'est vercel.json qui est utilisé)
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # nodemailer est chargé tel quel (pas regroupé) : plus fiable pour l'envoi d'emails
+  external_node_modules = ["nodemailer"]
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -53,14 +53,15 @@ function localApi() {
 
 /**
  * Adresse publique du site dans les balises d'aperçu de index.html (%OG_ORIGIN%).
- * Sur Vercel, VERCEL_PROJECT_PRODUCTION_URL est fournie au build ; SITE_URL permet de la forcer
+ * Fournie au build par Netlify (URL) ou Vercel (VERCEL_PROJECT_PRODUCTION_URL) ; SITE_URL permet de la forcer
  * (domaine personnalisé). Sans adresse connue, les lignes concernées sont retirées.
  */
 function ogOrigin() {
   return {
     name: 'og-origin',
     transformIndexHtml(html) {
-      const raw = process.env.SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || ''
+      // SITE_URL (forcé) · URL (Netlify, adresse principale du site) · VERCEL_PROJECT_PRODUCTION_URL (Vercel)
+      const raw = process.env.SITE_URL || process.env.URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || ''
       const origin = raw ? (/^https?:\/\//.test(raw) ? raw : `https://${raw}`).replace(/\/+$/, '') : ''
       return origin ? html.replaceAll('%OG_ORIGIN%', origin) : html.replace(/^.*(%OG_ORIGIN%|og:image).*\r?\n/gm, '')
     },
